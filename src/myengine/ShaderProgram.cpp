@@ -84,17 +84,29 @@ ShaderProgram::ShaderProgram(std::string _vert, std::string _frag)
 	glAttachShader(m_shaderProgram, m_vertShaderId); //attach the vertex shader to the program
 	glAttachShader(m_shaderProgram, m_fragShaderId); //attach the fragment shader to the program
 
-	glBindFragDataLocation(m_shaderProgram, 0, "outColor");
+	glBindFragDataLocation(m_shaderProgram, 0, "outColour");
 
 	glLinkProgram(m_shaderProgram);
 	glUseProgram(m_shaderProgram);
 	
 
 	m_posAttrib = glGetAttribLocation(m_shaderProgram, "position");
-	glVertexAttribPointer(m_posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(m_posAttrib, 2, GL_FLOAT, GL_FALSE,5 * sizeof(float), 0);
 	glEnableVertexAttribArray(m_posAttrib);
 
-	//m_uniColour = glGetUniformLocation(m_shaderProgram, "triangleColor");
+	GLint colAttrib = glGetAttribLocation(m_shaderProgram, "colour");
+	glEnableVertexAttribArray(colAttrib);
+	glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE,
+		5*sizeof(float), (void*)(2*sizeof(float)));
+
+	glGetProgramiv(m_shaderProgram, GL_LINK_STATUS, &m_success);
+
+	if (!m_success)
+	{
+		throw std::exception();
+	}
+
+	
 
 
 	std::cout << "hi";
@@ -105,9 +117,12 @@ ShaderProgram::~ShaderProgram()
 
 }
 
-void ShaderProgram::Draw()
+void ShaderProgram::Draw(float _time)
 {
-	
+	m_uniColour = glGetUniformLocation(m_shaderProgram, "triangleColour");
+	//glUniform3f(m_uniColour, 1.0f, 0.0f, 0.0f);
+
+	glUniform3f(m_uniColour, (sin(_time * 4.0f) + 1.0f) / 2.0f, 0.0f, 0.0f);
 
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }

@@ -13,16 +13,25 @@ typedef double foble;
 
 int main()
 {
+
+	auto t_start = std::chrono::high_resolution_clock::now();
 	bool running = true;
 	Screen screen("Odyssey", 800, 600);
 	Keyboard* keyboard = new Keyboard();
-	ShaderProgram* shader = new ShaderProgram("../shaders/VertShader.vert", "../shaders/FragShader.frag");
 	
-	float vertices[] =
+	
+	//GLfloat vertices[] =
+	//{
+	// 0.0f,  0.5f, // Vertex 1 (X, Y)
+	// 0.5f, -0.5f, // Vertex 2 (X, Y)
+	//-0.5f, -0.5f  // Vertex 3 (X, Y)
+	//};
+
+	GLfloat vertices[] = 
 	{
-	 0.0f,  0.5f, // Vertex 1 (X, Y)
-	 0.5f, -0.5f, // Vertex 2 (X, Y)
-	-0.5f, -0.5f  // Vertex 3 (X, Y)
+	 0.0f,  0.5f, 1.0f, 0.0f, 0.0f, // Vertex 1: Red
+	 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // Vertex 2: Green
+	-0.5f, -0.5f, 0.0f, 0.0f, 1.0f  // Vertex 3: Blue
 	};
 
 	GLuint vbo;
@@ -35,17 +44,20 @@ int main()
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
+	ShaderProgram* shader = new ShaderProgram("../shaders/VertShader.vert", "../shaders/FragShader.frag");
+
 	while(running)
 	{
 		running = keyboard->Events();
 
-		
+		auto t_now = std::chrono::high_resolution_clock::now();
+		float time = std::chrono::duration_cast<std::chrono::duration<float>>(t_now - t_start).count();
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		//shader->Draw();
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+		shader->Draw(time);
 
 		SDL_GL_SwapWindow(screen.GetWindow());
 	}

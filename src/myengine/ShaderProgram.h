@@ -4,13 +4,9 @@
 #include <iostream>
 #include <exception>
 #include <GL/glew.h>
+#include <chrono>
 
 class VertexArray;
-
-struct test
-{
-	
-};
 
 class ShaderProgram
 {
@@ -31,6 +27,8 @@ private:
 	GLint m_success = 0;
 	GLint m_posAttrib;
 	GLint m_uniColour;
+
+	
 	
 
 	
@@ -39,6 +37,6 @@ public:
 	ShaderProgram(std::string _vert, std::string _frag);
 	~ShaderProgram();
 
-	void Draw();
+	void Draw(float _time);
 
 };
