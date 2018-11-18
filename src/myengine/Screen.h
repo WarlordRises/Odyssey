@@ -23,6 +23,8 @@ public:
 	unsigned int GetHeight();
 	bool ScreenClosed();
 
+
+
 	SDL_Window* GetWindow();
 
 };

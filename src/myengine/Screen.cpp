@@ -26,14 +26,15 @@ int Screen::Init()
 		return 1;
 	}
 
-	/*if (glewInit() != GLEW_OK)
-	{
-		throw std::exception();
-	}*/
-
 	if (!SDL_GL_CreateContext(m_window))
 	{
 		throw std::exception();
+	}
+
+	if (glewInit() != GLEW_OK)
+	{
+		//throw std::exception();
+		std::cout << "glew did not init";
 	}
 
 	
