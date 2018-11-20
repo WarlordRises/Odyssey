@@ -27,6 +27,7 @@ private:
 	GLint m_success = 0;
 	GLint m_posAttrib;
 	GLint m_uniColour;
+	GLint m_colAttrib;
 
 	
 	

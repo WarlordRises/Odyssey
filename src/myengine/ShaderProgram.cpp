@@ -94,9 +94,9 @@ ShaderProgram::ShaderProgram(std::string _vert, std::string _frag)
 	glVertexAttribPointer(m_posAttrib, 2, GL_FLOAT, GL_FALSE,5 * sizeof(float), 0);
 	glEnableVertexAttribArray(m_posAttrib);
 
-	GLint colAttrib = glGetAttribLocation(m_shaderProgram, "colour");
-	glEnableVertexAttribArray(colAttrib);
-	glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE,
+	m_colAttrib = glGetAttribLocation(m_shaderProgram, "colour");
+	glEnableVertexAttribArray(m_colAttrib);
+	glVertexAttribPointer(m_colAttrib, 3, GL_FLOAT, GL_FALSE,
 		5*sizeof(float), (void*)(2*sizeof(float)));
 
 	glGetProgramiv(m_shaderProgram, GL_LINK_STATUS, &m_success);
